@@ -8,8 +8,8 @@
 
 /************* Define default values *************/
 #define SERIAL_DEBUG_BAUD   115200            // Baud rate for debug serial
-#define CURRENT_FIRMWARE_TITLE    "MB-Relay-4-Ch"
-#define CURRENT_FIRMWARE_VERSION  "1.0.0"
+#define CURRENT_FIRMWARE_TITLE    "MB-BME280"
+#define CURRENT_FIRMWARE_VERSION  "0.1.0"
 const char* deviceName            = "MB-BME280";
 unsigned long mtime               = 0;
 const int TIME_TO_SEND_TELEMETRY  = 30; //every x seconds to send tellemetry
@@ -67,7 +67,6 @@ bool DRD_DETECTED    = false;
 #include <Adafruit_BME280.h>
 #define SEALEVELPRESSURE_HPA (1013.25)
 Adafruit_BME280 bme; // I2C
-bool sensorStatus;
 bool BME280_DETECTED = false;
 
 struct bme280 {
