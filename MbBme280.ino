@@ -95,14 +95,6 @@ void setup() {
   
   setupBme280Sensor();
 
-  // get device id from macAddress
-  char deviceid[32] = "";
-  byte macAddressArray[6];
-  WiFi.macAddress(macAddressArray);
-  getDeviceId(macAddressArray, 6, deviceid);
-
-  loadConfigData();
-
   drd = new DoubleResetDetector(DRD_TIMEOUT, DRD_ADDRESS);
 
   if (drd->detectDoubleReset()) {
@@ -113,8 +105,7 @@ void setup() {
       DRD_DETECTED = false;
     }
 
-    setupWifiManager(deviceid, DRD_DETECTED);
-
+    setupWifiManager(DRD_DETECTED);
 }
 
 void loop() {
@@ -188,7 +179,13 @@ struct bme280 getBme280Data(){
 }
 
 /************* Wifi Manager *************/
-void setupWifiManager(char deviceid[32], bool DRD_DETECTED){
+void setupWifiManager(bool DRD_DETECTED){
+  // get device id from macAddress
+  char deviceid[32] = "";
+  byte macAddressArray[6];
+  WiFi.macAddress(macAddressArray);
+  getDeviceId(macAddressArray, 6, deviceid);
+
   wm.setDebugOutput(true);
   wm.debugPlatformInfo();
 
@@ -199,6 +196,7 @@ void setupWifiManager(char deviceid[32], bool DRD_DETECTED){
     wm.erase();
   }
 
+  loadConfigData();
   WiFiManagerParameter custom_server("server", "MaterBox server", THINGSBOARD_SERVER, 40);
   //WiFiManagerParameter custom_mqtt_port("port", "port", THINGSBOARD_PORT, 6);
   WiFiManagerParameter custom_api_token("apikey", "Token", TOKEN, 32);
@@ -212,7 +210,6 @@ void setupWifiManager(char deviceid[32], bool DRD_DETECTED){
   wm.setSaveParamsCallback(saveParamCallback);
   
   // add all your parameters here
-
   wm.addParameter(&custom_server);
 //  wm.addParameter(&custom_mqtt_port);
   wm.addParameter(&custom_api_token);
