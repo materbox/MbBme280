@@ -34,8 +34,8 @@ DoubleResetDetector* drd;
 #define THINGSBOARD_ENABLE_DYNAMIC 1
 #include "ThingsBoard.h"          //https://github.com/thingsboard/thingsboard-arduino-sdk
 
-char THINGSBOARD_SERVER[] = "materbox.io";
-char TOKEN[] = "DHT11_DEMO_TOKEN";
+char THINGSBOARD_SERVER[40] = "materbox.io";
+char TOKEN[36] = "DHT11_DEMO_TOKEN";
 
 uint16_t THINGSBOARD_PORT = 1883U;
 const uint16_t MAX_MESSAGE_SIZE = 128U; // Maximum size packets will ever be sent or received by the underlying MQTT client
